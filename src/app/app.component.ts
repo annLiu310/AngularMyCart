@@ -60,7 +60,8 @@ export class AppComponent implements OnInit {
   }
   removeProduct(product: Product): void {
     const indexOfProduct = this.products.indexOf(product);
-    this.products.splice(indexOfProduct, 1);
+    // this.products.splice(indexOfProduct, 1);
+    this.products = this.products.filter(x => x.name !== product.name);
     this.total -= product.price * product.quantity;
     // this.getTotal();
   }
