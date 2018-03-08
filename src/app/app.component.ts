@@ -36,6 +36,7 @@ export class AppComponent implements OnInit {
   }
 
   buyNew(): void {
+    // deep copy the object
     const productToAdd = {...this.newProduct};
     this.products.push(productToAdd);
     this.total += this.newProduct.price * this.newProduct.quantity;

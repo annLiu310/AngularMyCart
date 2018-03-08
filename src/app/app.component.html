@@ -22,7 +22,7 @@
     <button (click)="buyNew()">Buy it</button>
   </div>
 
-  <!-- *ngIf="products"  important!!!!-->
+  <!-- *ngIf="products"  important!!!! if products exist, init app-order-detail-->
   <app-order-detail *ngIf="products" [products]=products></app-order-detail>
 
   <button (click)="checkOut()"> Check Out </button>
