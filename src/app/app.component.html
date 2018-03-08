@@ -2,12 +2,11 @@
 <div>
   <div *ngIf="user">
     <h1>
-    Hi {{user.nickname}}! Welcome to {{ title }}!
+      Hi {{user.nickname}}! Welcome to {{ title }}!
     </h1>
-    <h2>Balance: {{user.balance}}  $</h2>
-  <img width="500" src={{user.avater}}> 
+    <h2>Balance: {{user.balance}} $</h2>
+    <img width="500" src={{user.avater}}>
   </div>
-
   <h1>
     Total Price:{{ total}} $
   </h1>
@@ -16,23 +15,15 @@
   </h2>
 
   <div *ngIf="newProduct">
-    Product:    <input [(ngModel)]="newProduct.name"  type="text" name="fname" /> 
-    Price:    <input [(ngModel)]="newProduct.price"  type="text" name="fname" /> 
-    Quanty:    <input [(ngModel)]="newProduct.quantity"  type="text" name="fname" />
-    <button  (click)="buyNew(newProduct)" >Buy it</button>
+    Product:
+    <input [(ngModel)]="newProduct.name" type="text" name="fname" /> Price:
+    <input [(ngModel)]="newProduct.price" type="text" name="fname" /> Quanty:
+    <input [(ngModel)]="newProduct.quantity" type="text" name="fname" />
+    <button (click)="buyNew()">Buy it</button>
   </div>
-  <ul>
-    <li *ngFor="let product of products" class="product-item">
-      <span style="width: 100px;"> {{product.name}} </span>
-      <span style="width: 100px;"> {{product.price}} </span>
-      <div>
-        <button (click)="addOne(product)"> + </button>
-        {{product.quantity}}
-        <!-- <input [(ngModel)]="product.quantity" placeholder="name" />  -->
-        <button (click)="removeOne(product)"> - </button>
-      </div>
-        <button (click)="removeProduct(product)" > Remove </button>
-    </li>
-  </ul>
-  <button  (click)="checkOut()" > Check Out </button>  
+
+  <!-- *ngIf="products"  important!!!!-->
+  <app-order-detail *ngIf="products" [products]=products></app-order-detail>
+
+  <button (click)="checkOut()"> Check Out </button>
 </div>

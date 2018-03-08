@@ -13,13 +13,13 @@ import { OrderService } from './order.service';
 export class AppComponent implements OnInit {
   // constructor
   constructor(private orderService: OrderService) {
-    this.newProduct = { name:''};
+    this.newProduct = new Product;
     }
   // definition
   products: Product[];
   user: User;
-  title: 'My Cart';
   total = 0;
+  title: 'My Cart';
   newProduct: Product;
   // init
   ngOnInit(): void {
@@ -28,17 +28,35 @@ export class AppComponent implements OnInit {
     this.title = 'My Cart';
   }
 
-
   getUserProfile(): void {
     this.orderService.getUserProfile()
       .then(user => {
         this.user = user;
       });
   }
+
+  buyNew(): void {
+    const productToAdd = {...this.newProduct};
+    this.products.push(productToAdd);
+    this.total += this.newProduct.price * this.newProduct.quantity;
+    this.resetNewProduct();
+  }
+
+  resetNewProduct(): void {
+    this.newProduct = new Product;
+  }
+
+  checkOut(): void {
+     this.products.splice(0, this.products.length);
+     this.user.balance -= this.total;
+     this.total = 0 ;
+     this.resetNewProduct();
+  }
+
   getProducts(): void {
     this.orderService.getProducts()
       .then(products => {
-        this.products = products; 
+        this.products = products;
         this.getTotal();
       });
   }
@@ -48,33 +66,5 @@ export class AppComponent implements OnInit {
       this.total = this.total + product.price * product.quantity;
     });
   }
-  addOne(product: Product): void {
-    product.quantity++;
-    this.total += product.price;
-    // this.getTotal();
-  }
-  removeOne(product: Product): void {
-    product.quantity--;
-    this.total -= product.price;
-    // this.getTotal();
-  }
-  removeProduct(product: Product): void {
-    const indexOfProduct = this.products.indexOf(product);
-    // this.products.splice(indexOfProduct, 1);
-    this.products = this.products.filter(x => x.name !== product.name);
-    this.total -= product.price * product.quantity;
-    // this.getTotal();
-  }
-  buyNew(product: Product): void {
-     this.products.push(product);
-    this.total += product.price * product.quantity;
-    // this.getTotal();
-  }
-  checkOut(): void {
-     this.products.splice(0, this.products.length);
-    this.user.balance -= this.total;
-    this.total = 0 ;
-    this.newProduct = { name:''};
-    // this.getTotal();
-  }
+
 }
